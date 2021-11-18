@@ -11,6 +11,20 @@ it("matches snapshot", function() {
   expect(asFragment()).toMatchSnapshot();
 })
 
+it("button increments card", function() {
+  const { getByTestId, queryByAltText } = render(<Carousel />)
+  const rightBtn = getByTestId('right-arrow');
+  const leftBtn = getByTestId('left-arrow');
+  fireEvent.click(rightBtn);
+  expect(queryByAltText("Photo by Richard Pasquarella on Unsplash")).not.toBeInTheDocument();
+  expect(queryByAltText("Photo by Pratik Patel on Unsplash")).toBeInTheDocument();
+  fireEvent.click(rightBtn);
+  expect(queryByAltText("Photo by Pratik Patel on Unsplash")).not.toBeInTheDocument();
+  expect(queryByAltText("Photo by Josh Post on Unsplash")).toBeInTheDocument();
+  fireEvent.click(leftBtn);
+  expect(queryByAltText("Photo by Pratik Patel on Unsplash")).toBeInTheDocument();
+  expect(queryByAltText("Photo by Josh Post on Unsplash")).not.toBeInTheDocument();
+})
 
 
 
